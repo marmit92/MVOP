@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MCDA Project</title>
-</head>
-<body>
-    <h1>Welcome to the MCDA Decision Support System</h1>
-    <p>This is the homepage of your application.</p>
-</body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron">
+  <h1 class="display-4">Dobrodošli v MCDA Demo</h1>
+  <p class="lead">To je demonstracijska aplikacija za večkriterijsko odločanje (MCDA) z uporabo Flask, PyMongo in pyDecision.</p>
+  <hr class="my-4">
+  <p>Uporabite navigacijo zgoraj, da pregledate podjetja, kriterije, uteži in metode.</p>
+</div>
+{% endblock %}

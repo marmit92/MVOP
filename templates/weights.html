@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Uteži</h1>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for m in messages %}
+<div class="alert alert-info alert-dismissible fade show">{{ m }} <button type="button" class="btn-close" data-bs-dismiss="alert"
+    aria-label="Close"></button></div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<form method="post" id="weightsForm">
+  <table class="table table-striped table-hover border-primary">
+    <thead>
+      <tr>
+        <th>Kriterij</th>
+        <th>Utež</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in criteria %}
+      <tr>
+        <td>{{ c.name }}</td>
+        <td>
+          <input type="number"
+                 step="0.1"
+                 name="weight_{{ c._id }}"
+                 value="{{ c.weight_value }}"
+                 min="0" max="1"
+                 class="form-control weight-input"
+                 style="max-width: 120px;">
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <br>
+  <hr>
+  <br>
+  <!-- Prikaz sprotne vsote z Badge (poljubno) -->
+  <h2 class="mb-2">
+    <label class="form-label">
+      Trenutna vsota uteži:
+      <span id="sumDisplay" class="badge bg-info">0.0</span>
+    </label>
+  </h2>
+
+  <!-- Alert za opozorilo, če vsota != 1 -->
+  <div id="warningMsg" class="alert alert-danger" style="display:none;" role="alert">
+    Vsota uteži mora biti natančno 1.0!
+  </div>
+
+  <button type="submit" class="btn btn-primary" id="saveButton" disabled>Shrani</button>
+</form>
+
+<script>
+  // Izberemo vsa polja za vnos uteži
+  const weightInputs = document.querySelectorAll('.weight-input');
+  const sumDisplay   = document.getElementById('sumDisplay');
+  const warningMsg   = document.getElementById('warningMsg');
+  const saveButton   = document.getElementById('saveButton');
+  const weightsForm  = document.getElementById('weightsForm');
+
+  // Funkcija, ki se izvede pri vsaki spremembi vrednosti vnosnih polj
+  function updateSum() {
+    let total = 0;
+    weightInputs.forEach(inp => {
+      const val = parseFloat(inp.value) || 0;
+      total += val;
+    });
+
+    // Prikaz vsote (zaokroženo na 1 decimalko)
+    sumDisplay.textContent = total.toFixed(1);
+
+    // Preverimo, ali je vsota približno 1.0
+    if (Math.abs(total - 1) < 0.000001) {
+      // V redu -> gumb aktiven, skrijemo alert o napaki
+      saveButton.disabled = false;
+      warningMsg.style.display = 'none';
+    } else {
+      // Ni v redu -> onemogočimo gumb, prikažemo alert
+      saveButton.disabled = true;
+      warningMsg.style.display = 'block';
+    }
+  }
+
+  // Vsak input sproži updateSum ob 'input' dogodku
+  weightInputs.forEach(inp => {
+    inp.addEventListener('input', updateSum);
+  });
+
+  // Ob oddaji obrazca preverimo vsoto, prikažemo success in nato pošljemo
+  weightsForm.addEventListener('submit', (evt) => {
+    let sumCheck = 0;
+    weightInputs.forEach(inp => {
+      sumCheck += parseFloat(inp.value) || 0;
+    });
+
+    if (Math.abs(sumCheck - 1) > 0.000001) {
+      // Preprečimo oddajo in pokažemo napako
+      evt.preventDefault();
+      warningMsg.style.display = 'block';
+    } else {
+      // Vsota = 1, najprej pokažemo success
+      warningMsg.style.display = 'none';
+      evt.preventDefault(); // Za trenutek zadržimo submit, da vidi success
+
+      // Po kratki pavzi  (npr. 1.5 sekunde) dejansko pošljemo obrazec
+      setTimeout(() => {
+        weightsForm.submit();
+      }, 1500);
+    }
+  });
+
+  // Ob začetku izračunaj vsoto, da nastavimo stanje
+  updateSum();
+</script>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Podjetja</h1>
+<table class="table table-striped table-hover border-primary">
+  <thead>
+    <tr>
+      <th>Ime podjetja</th>
+      <th>Prihodek($)</th>
+      <th>Dobiček($)</th>
+      <th>Finančna sredstva($)</th>
+      <th>Število zaposlenih</th>
+      <th>Sprememba prihodkov(%)</th>
+      <th>Sprememba dobička(%)</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for c in companies %}
+    <tr>
+      <td>{{ c['Ime podjetja'] }}</td>
+      <td>{{ c['Prihodek'] }}</td>
+      <td>{{ c['Dobiček'] }}</td>
+      <td>{{ c['Finančna sredstva'] }}</td>
+      <td>{{ c['Število zaposlenih'] }}</td>
+      <td style="text-align: center;">{{ c['Sprememba prihodkov'] }}</td>
+      <td style="text-align: center;">{{ c['Sprememba dobička'] }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

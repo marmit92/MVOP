@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Rezultati: {{ method }}</h2>
+
+<!-- Primer prikaza "matrike" (matrix|safe) -->
+<p><strong>Matrika odločanja:</strong></p>
+<div class="table-responsive">
+  {{ matrix|safe }}
+</div>
+
+<!-- Prikaz uteži (npr. vektor) -->
+<p><strong>Uteži (normalizirane):</strong> {{ weights }}</p>
+
+<hr>
+<h3>Razvrstitev:</h3>
+<table class="table table-striped table-hover border-primary">
+  <thead>
+    <tr>
+      <th>Index</th>
+      <th>Company</th>
+      <th>Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for r in results %}
+    <!-- loop.index (1-based) ali loop.index0 (0-based) -->
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ r.company }}</td>
+      <td>{{ r.score }}</td>
+    </tr>
+    {% endfor %}
+
+  </tbody>
+</table>
+
+<!-- Gumb nazaj na /methods -->
+<a class="btn btn-secondary" href="{{ url_for('methods') }}">Nazaj na izbiro metode</a>
+
+<hr>
+<!-- Chart.js graf -->
+<h3>Graf razvrstitve</h3>
+<canvas id="myChart" width="600" height="300"></canvas>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Preberemo spremenljivke iz Jinja
+  const labels = {{ chart_labels| tojson }};
+  const data = {{ chart_data| tojson }};
+
+  const ctx = document.getElementById('myChart').getContext('2d');
+  const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'MCDA Score',
+        data: data,
+        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          max: 1
+        }
+      }
+    }
+  });
+</script>
+{% endblock %}
