@@ -20,6 +20,7 @@ def create_app():
 
     # Registracija Blueprints
     from .routes.main import main_bp
+    from .routes.analysis import analysis_bp
     from .routes.companies import companies_bp
     from .routes.criteria import criteria_bp
     from .routes.weights import weights_bp
@@ -27,6 +28,7 @@ def create_app():
     from .routes.results import results_bp
 
     app.register_blueprint(main_bp)
+    app.register_blueprint(analysis_bp)
     app.register_blueprint(companies_bp)
     app.register_blueprint(criteria_bp)
     app.register_blueprint(weights_bp)

@@ -1,0 +1,28 @@
+<!-- templates/analysis/analysis_base.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Bootstrap Nav-Tabs -->
+<ul class="nav nav-tabs navbar-dark bg-dark" id="analysisTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+        <a class="nav-link text-light {% if active_tab == 'criteria' %}active text-dark{% endif %}" href="{{ url_for('criteria.criteria') }}"
+            role="tab" aria-controls="criteria"
+            aria-selected="{% if active_tab == 'criteria' %}true{% else %}false{% endif %}">1. Korak: Kriteriji</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link text-light {% if active_tab == 'weights' %}active text-dark{% endif %}" href="{{ url_for('weights.weights') }}"
+            role="tab" aria-controls="weights"
+            aria-selected="{% if active_tab == 'weights' %}true{% else %}false{% endif %}">2. Korak: Uteži</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link text-light {% if active_tab == 'methods' %}active text-dark{% endif %}" href="{{ url_for('methods.methods') }}"
+            role="tab" aria-controls="methods"
+            aria-selected="{% if active_tab == 'methods' %}true{% else %}false{% endif %}">3. Korak: Metode</a>
+    </li>
+</ul>
+<div style="border: solid 1px #dee2e6; border-top: none; border-radius: 0px 0px 25px 25px; padding: 25px; min-height: 100%;" class="tab-content"
+    id="analysisTabsContent">
+    {% block analysis_content %}
+    {% endblock %}
+</div>
+{% endblock %}

@@ -8,7 +8,7 @@ results_bp = Blueprint('results', __name__, url_prefix='/results')
 ##############################################################################
 @results_bp.route('/')
 def results():
-    all_analysis_results = list(mongo.db.analysis_results.find())
+    all_analysis_results = list(mongo.db.analysis_results.find().sort('_id', -1))
 
     for analysis_doc in all_analysis_results:
         for r in analysis_doc.get("ranking", []):
