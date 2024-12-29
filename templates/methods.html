@@ -4,7 +4,7 @@
 <form class="row" method="POST" action="{{ url_for('methods.methods') }}" id="methodsForm">
   <div class="col-sm-12 col-md-6 col-lg-6">
     <!-- Izbira podjetij ✅ -->
-    <h6>Izberite podjetja, ki jih želite vključiti v analizo (vsaj 5):</h6>
+    <h6>Izberite podjetja, ki jih želite vključiti v analizo (vsaj 3):</h6>
     {% for comp in companies %}
     <div class="form-check">
       <!-- Če comp.include_to_analysis je True, vnaprej obkljukaj -->
@@ -22,7 +22,7 @@
     <select name="method" class="form-select" style="max-width: 300px;">
       <option value="TOPSIS">TOPSIS</option>
       <option value="PROMETHEE">PROMETHEE</option>
-      <option value="WSM">WSM</option>
+      <option value="SAW">SAW</option>
       <option value="AHP">AHP</option>
     </select>
     <br>
@@ -36,7 +36,7 @@
 
 
 <script>
-  // Preverjanje vsaj 5 izbranih podjetij (checkbox)
+  // Preverjanje vsaj 3 izbranih podjetij (checkbox)
   const checkboxes = document.querySelectorAll('.company-checkbox');
   const analyzeBtn = document.getElementById('analyzeBtn');
 
@@ -47,7 +47,7 @@
         count++;
       }
     });
-    analyzeBtn.disabled = (count < 5);
+    analyzeBtn.disabled = (count < 3);
   }
 
   checkboxes.forEach(chk => {

@@ -6,6 +6,7 @@ from pyDecision.algorithm import topsis_method
 import locale
 from datetime import datetime
 from app.helpers import parse_number
+from app.promethee import promethee
 from bson.objectid import ObjectId
 
 methods_bp = Blueprint('methods', __name__, url_prefix='/methods')
@@ -19,8 +20,8 @@ def methods():
         # Preberemo izbrana podjetja (checkbox)
         selected_ids = request.form.getlist("selected_companies")
         # Zahteva vsaj 5 izbranih
-        if len(selected_ids) < 5:
-            flash("Prosimo, izberite vsaj 5 podjetij za analizo!", "danger")
+        if len(selected_ids) < 3:
+            flash("Prosimo, izberite vsaj 3 podjetij za analizo!", "danger")
             return redirect(url_for('methods.methods'))
         
         # 2) Nastavimo include_to_analysis=True/False v 'companies' zbirki
@@ -84,8 +85,6 @@ def methods():
                 row.append(val)
             decision_matrix.append(row)
             company_names.append(comp["Ime podjetja"])
-            print(f"[DEBUG]: Company: {comp['Ime podjetja']}, Values: {row}")
-
         decision_matrix = np.array(decision_matrix, dtype=int)
         print("[DEBUG-Decision Matrix:]", decision_matrix, "[Company Names]:", company_names)
 
@@ -94,20 +93,29 @@ def methods():
 
         matrix_html = pd.DataFrame(decision_matrix, index=company_names, columns=[c["name"].strip() for c in sorted_criteria]).to_html(justify="inherit", classes='table table-striped table-hover border-primary table-sm')
 
-        if chosen_method == "TOPSIS":
-            try:
-                topsis_res = topsis_method(decision_matrix, weights, benefit, graph=False, verbose=False)
-                print("[DEBUG-TOPSIS-RESULT]: TOPSIS Results:", topsis_res)
-                sorted_indices = np.argsort(-topsis_res)
+        match chosen_method: 
+            case"TOPSIS":
+                try:
+                    topsis_res = topsis_method(decision_matrix, weights, benefit, graph=False, verbose=False)
+                    print("[DEBUG-TOPSIS-RESULT]: TOPSIS Results:", topsis_res)
+                    sorted_indices = np.argsort(-topsis_res)
                 
-                ranking = [{"company": company_names[idx], "score": round(float(topsis_res[idx]), 2)} for idx in sorted_indices]
-                print("[DEBUG-RANKING]: Ranking:", ranking)
-            except Exception as e:
-                flash(f"Napaka pri izvajanju TOPSIS metode: {str(e)}", "danger")
+                    ranking = [{"company": company_names[idx], "score": round(float(topsis_res[idx]), 2)} for idx in sorted_indices]
+                except Exception as e:
+                    flash(f"Napaka pri izvajanju TOPSIS metode: {str(e)}", "danger")
+                    return redirect(url_for('methods.methods'))
+            case "PROMETHEE":                
+                try:
+                    promethee_result = promethee(weights, benefit, [[company_names[i]] + list(decision_matrix[i]) for i in range(len(company_names))])
+                    ranking = [{"company": alt, "score": round(promethee_result["net_flows"][alt], 2)} for alt in promethee_result["rankings"]]
+                    print("[DEBUG-PROMETHEE-RESULT]:", promethee_result)
+                except Exception as e:
+                    flash(f"Napaka pri izvajanju PROMETHEE metode: {str(e)}", "danger")
+                    return redirect(url_for('methods.methods'))
+                
+            case _:
+                flash("Neznana metoda izbrane analize.", "danger")
                 return redirect(url_for('methods.methods'))
-        else:
-            flash("Neznana metoda izbrane analize.", "danger")
-            return redirect(url_for('methods.methods'))
 
         locale.setlocale(locale.LC_TIME, 'sl_SI.UTF-8')
         formatted_date = datetime.now().strftime("[%d.%m.%Y]_[%H:%M:%S]")
