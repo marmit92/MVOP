@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <!-- Flash sporočila -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <h1 class="mt-4">Metode</h1>
+  <form method="POST" action="{{ url_for('methods.methods') }}" id="methodsForm">
+
+    <!-- Izbira podjetij ✅ -->
+    <div class="mb-4">
+      <h4>Izberite podjetja, ki jih želite vključiti v analizo (vsaj 5):</h4>
+      {% for comp in companies %}
+        <div class="form-check">
+          <!-- Če comp.include_to_analysis je True, vnaprej obkljukaj -->
+          <input class="form-check-input company-checkbox"
+                 type="checkbox"
+                 name="selected_companies"
+                 value="{{ comp._id }}"
+                 id="comp_{{ comp._id }}"
+                 {% if comp.include_to_analysis %} checked {% endif %}>
+          <label class="form-check-label" for="comp_{{ comp._id }}">
+            {{ comp['Ime podjetja'] }}
+          </label>
+        </div>
+      {% endfor %}
+    </div>
+
+    <hr>
+
+    <!-- Izbira metode MCDA -->
+    <div class="mb-4">
+      <h4>Izberite metodo MCDA:</h4>
+      <select name="method" class="form-select" style="max-width: 300px;">
+        <option value="TOPSIS">TOPSIS</option>
+<!--         <option value="PROMETHEE">PROMETHEE</option>
+        <option value="WSM">WSM</option>
+        <option value="AHP">AHP</option> -->
+      </select>
+    </div>
+    <div class="mb-4">
+      <label for="analysis_name" class="form-label">Ime analize</label>
+      <input required type="text" class="form-control" id="analysis_name" name="analysis_name" style="max-width: 300px;"> 
+    </div>
+
+    <hr>
+
+    <!-- Gumb za oddajo -->
+    <button type="submit" class="btn btn-primary" id="analyzeBtn" disabled>Izvedi analizo</button>
+  </form>
+</div>
+
+<script>
+  // Preverjanje vsaj 5 izbranih podjetij (checkbox)
+  const checkboxes = document.querySelectorAll('.company-checkbox');
+  const analyzeBtn = document.getElementById('analyzeBtn');
+
+  function updateCheckboxCount() {
+    let count = 0;
+    checkboxes.forEach(chk => {
+      if (chk.checked) {
+        count++;
+      }
+    });
+    analyzeBtn.disabled = (count < 5);
+  }
+
+  checkboxes.forEach(chk => {
+    chk.addEventListener('change', updateCheckboxCount);
+  });
+
+  // Po nalaganju strani
+  updateCheckboxCount();
+</script>
+{% endblock %}

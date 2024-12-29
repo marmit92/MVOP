@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Kriteriji</h1>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for m in messages %}
+<div class="alert alert-info alert-dismissible fade show">{{ m }} <button type="button" class="btn-close" data-bs-dismiss="alert"
+    aria-label="Close"></button></div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<form method="POST" action="{{ url_for('criteria.criteria') }}" id="criteriaForm">
+  <table class="table table-striped table-hover border-primary table-sm">
+    <thead>
+      <tr>
+        <th>Vključi v analizo</th>
+        <th>Ime kriterija</th>
+        <th>Opis</th>
+        <th>Tip</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in criteria %}
+      <tr>
+        <!-- Checkbox za izbiro kriterija -->
+        <td>
+          <input type="checkbox" class="criteria-checkbox" name="selected_criteria" value="{{ c._id }}" {% if
+            c.include_to_analysis %} checked {% endif %}>
+        </td>
+        <td>{{ c.name }}</td>
+        <td>{{ c.description }}</td>
+        <td>{{ c.type }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <br>
+  <hr>
+  <br>
+  <!-- Prikaz sprotnega števila izbranih kriterijev z Badge -->
+  <h2 class="mb-2">
+    <label class="form-label">
+      Trenutna vsota izbranih kriterijev:
+      <span id="sumDisplayCriteria" class="badge bg-info">0</span>
+    </label>
+  </h2>
+
+  <!-- Alert za opozorilo, če je manj kot 3 izbranih kriterijev -->
+  <div id="warningMsgCriteria" class="alert alert-danger" style="display:none;" role="alert">
+    Vsaj 3 kriteriji morajo biti izbrani!
+  </div>
+
+  <button type="submit" class="btn btn-primary" id="saveButtonCriteria" disabled>Shrani izbor kriterijev</button>
+</form>
+
+<script>
+  // Dobimo vse checkbokse, ki predstavljajo kriterije
+  const criteriaCheckboxes = document.querySelectorAll('.criteria-checkbox');
+  const sumDisplayCriteria = document.getElementById('sumDisplayCriteria');
+  const warningMsgCriteria = document.getElementById('warningMsgCriteria');
+  const saveButtonCriteria = document.getElementById('saveButtonCriteria');
+  const criteriaForm = document.getElementById('criteriaForm');
+
+  // Ta funkcija prešteje, koliko je obkljukanih checkboxov
+  function updateSelectedCount() {
+    let count = 0;
+    criteriaCheckboxes.forEach(chk => {
+      if (chk.checked) {
+        count++;
+      }
+    });
+
+    // Izpišemo število izbranih kriterijev
+    sumDisplayCriteria.textContent = count;
+
+    // Če je izbranih vsaj 3, omogočimo gumb in skrijemo alert
+    if (count >= 3) {
+      saveButtonCriteria.disabled = false;
+      warningMsgCriteria.style.display = 'none';
+    } else {
+      // Manj kot 3 -> onemogočimo gumb, pokažemo alert
+      saveButtonCriteria.disabled = true;
+      warningMsgCriteria.style.display = 'block';
+    }
+  }
+
+  // Ob vsakem kliku na checkbox izvedemo updateSelectedCount
+  criteriaCheckboxes.forEach(chk => {
+    chk.addEventListener('change', updateSelectedCount);
+  });
+
+  // Ob oddaji obrazca (submit):
+  criteriaForm.addEventListener('submit', (evt) => {
+    // Ponovno preštejemo
+    let count = 0;
+    criteriaCheckboxes.forEach(chk => {
+      if (chk.checked) {
+        count++;
+      }
+    });
+
+    // Če je manj kot 3, preprečimo pošiljanje in prikažemo alert
+    if (count < 3) {
+      evt.preventDefault();
+      warningMsgCriteria.style.display = 'block';
+    } else {
+      // Vsaj 3 -> prikažemo "success", počakamo malo, nato pošljemo
+      evt.preventDefault();
+      warningMsgCriteria.style.display = 'none';
+
+      setTimeout(() => {
+        criteriaForm.submit();
+      }, 1500);
+    }
+  });
+
+  // Ob prvem nalaganju preverimo stanje
+  updateSelectedCount();
+</script>
+{% endblock %}
