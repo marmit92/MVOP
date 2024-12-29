@@ -11,7 +11,7 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{{ url_for('index') }}">MCDA</a>
+      <a class="navbar-brand" href="{{ url_for('main.index') }}">MCDA</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
               data-bs-target="#navbarNav" aria-controls="navbarNav"
               aria-expanded="false" aria-label="Toggle navigation">
@@ -20,16 +20,19 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('companies') }}">Podjetja</a>
+            <a class="nav-link" href="{{ url_for('companies.companies') }}">Podjetja</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('criteria') }}">Kriteriji</a>
+            <a class="nav-link" href="{{ url_for('criteria.criteria') }}">Kriteriji</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('weights') }}">Uteži</a>
+            <a class="nav-link" href="{{ url_for('weights.weights') }}">Uteži</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('methods') }}">Metode</a>
+            <a class="nav-link" href="{{ url_for('methods.methods') }}">Metode</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('results.results') }}">Rezultati</a>
           </li>
         </ul>
       </div>
