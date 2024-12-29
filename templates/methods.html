@@ -1,60 +1,39 @@
-{% extends "base.html" %}
-{% block content %}
-<div class="container">
-  <!-- Flash sporočila -->
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      {% for category, message in messages %}
-        <div class="alert alert-{{ category }}">{{ message }}</div>
-      {% endfor %}
-    {% endif %}
-  {% endwith %}
-
-  <h1 class="mt-4">Metode</h1>
-  <form method="POST" action="{{ url_for('methods.methods') }}" id="methodsForm">
-
+{% extends "analysis.html" %}
+{% block analysis_content %}
+<h1>Izbor podjetij in metode</h1>
+<form class="row" method="POST" action="{{ url_for('methods.methods') }}" id="methodsForm">
+  <div class="col-sm-12 col-md-6 col-lg-6">
     <!-- Izbira podjetij ✅ -->
-    <div class="mb-4">
-      <h4>Izberite podjetja, ki jih želite vključiti v analizo (vsaj 5):</h4>
-      {% for comp in companies %}
-        <div class="form-check">
-          <!-- Če comp.include_to_analysis je True, vnaprej obkljukaj -->
-          <input class="form-check-input company-checkbox"
-                 type="checkbox"
-                 name="selected_companies"
-                 value="{{ comp._id }}"
-                 id="comp_{{ comp._id }}"
-                 {% if comp.include_to_analysis %} checked {% endif %}>
-          <label class="form-check-label" for="comp_{{ comp._id }}">
-            {{ comp['Ime podjetja'] }}
-          </label>
-        </div>
-      {% endfor %}
+    <h6>Izberite podjetja, ki jih želite vključiti v analizo (vsaj 5):</h6>
+    {% for comp in companies %}
+    <div class="form-check">
+      <!-- Če comp.include_to_analysis je True, vnaprej obkljukaj -->
+      <input class="form-check-input company-checkbox" type="checkbox" name="selected_companies" value="{{ comp._id }}"
+        id="comp_{{ comp._id }}" {% if comp.include_to_analysis %} checked {% endif %}>
+      <label class="form-check-label" for="comp_{{ comp._id }}">
+        {{ comp['Ime podjetja'] }}
+      </label>
     </div>
-
-    <hr>
-
+    {% endfor %}
+  </div>
+  <div class="col-sm-12 col-md-6 col-lg-6">
     <!-- Izbira metode MCDA -->
-    <div class="mb-4">
-      <h4>Izberite metodo MCDA:</h4>
-      <select name="method" class="form-select" style="max-width: 300px;">
-        <option value="TOPSIS">TOPSIS</option>
-<!--         <option value="PROMETHEE">PROMETHEE</option>
-        <option value="WSM">WSM</option>
-        <option value="AHP">AHP</option> -->
-      </select>
-    </div>
-    <div class="mb-4">
-      <label for="analysis_name" class="form-label">Ime analize</label>
-      <input required type="text" class="form-control" id="analysis_name" name="analysis_name" style="max-width: 300px;"> 
-    </div>
+    <h4>Izberite metodo MCDA:</h4>
+    <select name="method" class="form-select" style="max-width: 300px;">
+      <option value="TOPSIS">TOPSIS</option>
+      <option value="PROMETHEE">PROMETHEE</option>
+      <option value="WSM">WSM</option>
+      <option value="AHP">AHP</option>
+    </select>
+    <br>
+    <br>
+    <h4 for="analysis_name" class="form-label">Ime analize:</h4>
+    <input required type="text" class="form-control" id="analysis_name" name="analysis_name" style="max-width: 300px;">
+  </div>
+  <!-- Gumb za oddajo -->
+  <button type="submit" class="btn btn-primary" id="analyzeBtn" disabled>Izvedi analizo</button>
+</form>
 
-    <hr>
-
-    <!-- Gumb za oddajo -->
-    <button type="submit" class="btn btn-primary" id="analyzeBtn" disabled>Izvedi analizo</button>
-  </form>
-</div>
 
 <script>
   // Preverjanje vsaj 5 izbranih podjetij (checkbox)

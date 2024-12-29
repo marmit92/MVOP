@@ -1,16 +1,6 @@
-{% extends "base.html" %}
-{% block content %}
-<h1>Kriteriji</h1>
-
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for m in messages %}
-<div class="alert alert-info alert-dismissible fade show">{{ m }} <button type="button" class="btn-close" data-bs-dismiss="alert"
-    aria-label="Close"></button></div>
-{% endfor %}
-{% endif %}
-{% endwith %}
-
+{% extends "analysis.html" %}
+{% block analysis_content %}
+<h1>Izbor kriterijev</h1>
 <form method="POST" action="{{ url_for('criteria.criteria') }}" id="criteriaForm">
   <table class="table table-striped table-hover border-primary table-sm">
     <thead>
@@ -49,7 +39,7 @@
 
   <!-- Alert za opozorilo, če je manj kot 3 izbranih kriterijev -->
   <div id="warningMsgCriteria" class="alert alert-danger" style="display:none;" role="alert">
-    Vsaj 3 kriteriji morajo biti izbrani!
+    Vsaj 2 kriterija morajo biti izbrani!
   </div>
 
   <button type="submit" class="btn btn-primary" id="saveButtonCriteria" disabled>Shrani izbor kriterijev</button>
@@ -75,8 +65,8 @@
     // Izpišemo število izbranih kriterijev
     sumDisplayCriteria.textContent = count;
 
-    // Če je izbranih vsaj 3, omogočimo gumb in skrijemo alert
-    if (count >= 3) {
+    // Če je izbranih vsaj 2, omogočimo gumb in skrijemo alert
+    if (count >= 2) {
       saveButtonCriteria.disabled = false;
       warningMsgCriteria.style.display = 'none';
     } else {
@@ -102,11 +92,11 @@
     });
 
     // Če je manj kot 3, preprečimo pošiljanje in prikažemo alert
-    if (count < 3) {
+    if (count < 2) {
       evt.preventDefault();
       warningMsgCriteria.style.display = 'block';
     } else {
-      // Vsaj 3 -> prikažemo "success", počakamo malo, nato pošljemo
+      // Vsaj 2 -> prikažemo "success", počakamo malo, nato pošljemo
       evt.preventDefault();
       warningMsgCriteria.style.display = 'none';
 

@@ -1,16 +1,6 @@
-{% extends "base.html" %}
-{% block content %}
-<h1>Uteži</h1>
-
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for m in messages %}
-<div class="alert alert-info alert-dismissible fade show">{{ m }} <button type="button" class="btn-close" data-bs-dismiss="alert"
-    aria-label="Close"></button></div>
-{% endfor %}
-{% endif %}
-{% endwith %}
-
+{% extends "analysis.html" %}
+{% block analysis_content %}
+<h1>Nastavljanje uteži</h1>
 <form method="post" id="weightsForm">
   <table class="table table-striped table-hover border-primary table-sm">
     <thead>

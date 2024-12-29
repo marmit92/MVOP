@@ -25,9 +25,9 @@ def criteria():
             )
 
         flash("Izbira kriterijev je uspešno shranjena!✅")
-        return redirect(url_for('criteria.criteria'))
+        return redirect(url_for('weights.weights'))
 
     else:
         # GET -> pridobimo vse kriterije in jih pošljemo v predlogo
         all_criteria = list(mongo.db.criteria.find())
-        return render_template('criteria.html', criteria=all_criteria)
+        return render_template('criteria.html', criteria=all_criteria, active_tab='criteria')

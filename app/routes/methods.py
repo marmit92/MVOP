@@ -125,9 +125,8 @@ def methods():
 
         mongo.db.analysis_results.insert_one(analysis_doc)
 
-        flash(f"Uspešno izbrali {len(selected_ids)} podjetij in metodo {chosen_method}!", "success")
+        flash(f"Uspešno izbrali {len(selected_ids)} podjetij in metodo {chosen_method}! ✅", "success")
         return redirect(url_for('results.results'))
-
     else:
         all_companies = list(mongo.db.companies.find())
-        return render_template('methods.html', companies=all_companies)
+        return render_template('methods.html', companies=all_companies, active_tab='methods')

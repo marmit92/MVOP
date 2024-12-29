@@ -29,11 +29,11 @@ def weights():
                     upsert=True
                 )
         flash("Uteži so uspešno nastavljeni!✅")
-        return redirect(url_for('weights.weights'))
+        return redirect(url_for('methods.methods'))
     else:
         # GET
         all_criteria = list(mongo.db.criteria.find())
         for c in all_criteria:
             w_doc = mongo.db.weights.find_one({"id_kriterija": str(c["_id"])})
             c["weight_value"] = w_doc.get("weight_value", 0.0) if w_doc else 0.0
-        return render_template('weights.html', criteria=all_criteria)
+        return render_template('weights.html', criteria=all_criteria, active_tab='weights')
