@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app import mongo
 import numpy as np
 import pandas as pd
-from pyDecision.algorithm import topsis_method
+from pyDecision.algorithm import topsis_method, saw_method, vikor_method, macbeth_method
 import locale
 from datetime import datetime
 from app.helpers import parse_number
@@ -94,16 +94,26 @@ def methods():
         matrix_html = pd.DataFrame(decision_matrix, index=company_names, columns=[c["name"].strip() for c in sorted_criteria]).to_html(justify="inherit", classes='table table-striped table-hover border-primary table-sm')
 
         match chosen_method: 
-            case"TOPSIS":
+            case "TOPSIS":
                 try:
-                    topsis_res = topsis_method(decision_matrix, weights, benefit, graph=False, verbose=False)
-                    print("[DEBUG-TOPSIS-RESULT]: TOPSIS Results:", topsis_res)
-                    sorted_indices = np.argsort(-topsis_res)
-                
-                    ranking = [{"company": company_names[idx], "score": round(float(topsis_res[idx]), 2)} for idx in sorted_indices]
+                    topsis_result = topsis_method(decision_matrix, weights, benefit, graph=False, verbose=False)
+                    print("[DEBUG-TOPSIS-RESULT]: ", topsis_result)
+                    sorted_indices = np.argsort(-topsis_result)                
+                    ranking = [{"company": company_names[idx], "score": round(float(topsis_result[idx]), 2)} for idx in sorted_indices]
                 except Exception as e:
                     flash(f"Napaka pri izvajanju TOPSIS metode: {str(e)}", "danger")
                     return redirect(url_for('methods.methods'))
+            case "WSM":
+                try:
+                    wsm_result = saw_method(decision_matrix, benefit, weights, graph=False, verbose=False)
+                    # Ekstrakcija drugega stolpca z uporabo np.concatenate
+                    scores = np.concatenate(wsm_result[:, 1:].reshape(1, -1))
+                    # Razvrstitev po ocenah v padajočem vrstnem redu
+                    sorted_indices = np.argsort(-scores)
+                    ranking = [{"company": company_names[idx], "score" : round(float(scores[idx]), 2)} for idx in sorted_indices]
+                except Exception as e:
+                    flash(f"Napaka pri izvajanju WSM metode: {str(e)}", "danger")
+                    return redirect(url_for('methods.methods'))                 
             case "PROMETHEE":                
                 try:
                     promethee_result = promethee(weights, benefit, [[company_names[i]] + list(decision_matrix[i]) for i in range(len(company_names))])
@@ -112,7 +122,25 @@ def methods():
                 except Exception as e:
                     flash(f"Napaka pri izvajanju PROMETHEE metode: {str(e)}", "danger")
                     return redirect(url_for('methods.methods'))
-                
+            case "VIKOR":
+                try:
+                    s, r, q, vikor_result = vikor_method(decision_matrix, weights, benefit, strategy_coefficient = 0.5, graph=False, verbose=False)
+                    print("[DEBUG-VIKOR-RESULT]: ", vikor_result)
+                    scores = np.concatenate(vikor_result[:, 1:].reshape(1, -1))
+                    sorted_indices = np.argsort(-scores)                
+                    ranking = [{"company": company_names[idx], "score": round(float(scores[idx]), 2)} for idx in sorted_indices]
+                except Exception as e:
+                    flash(f"Napaka pri izvajanju VIKOR metode: {str(e)}", "danger")
+                    return redirect(url_for('methods.methods'))                
+            case "MACBETH":
+                try:
+                    macbeth_result = macbeth_method(decision_matrix, weights, benefit, graph=False, verbose=False)
+                    print("[DEBUG-MACBETH-RESULT]: ", macbeth_result)
+                    sorted_indices = np.argsort(-macbeth_result)                
+                    ranking = [{"company": company_names[idx], "score": round(float(macbeth_result[idx]), 2)} for idx in sorted_indices]
+                except Exception as e:
+                    flash(f"Napaka pri izvajanju MACBETH metode: {str(e)}", "danger")
+                    return redirect(url_for('methods.methods'))
             case _:
                 flash("Neznana metoda izbrane analize.", "danger")
                 return redirect(url_for('methods.methods'))
@@ -124,7 +152,7 @@ def methods():
             "analysis_name": f"[{analysis_name}]_[{chosen_method}]_{formatted_date}",
             "method": chosen_method,
             "criteria_chosen_to_analysis": [str(c["name"]) for c in sorted_criteria],
-            "weights": weights,
+            "weights": list(weights), 
             "companies_chosen": [str(x["Ime podjetja"]) for x in all_companies],
             "decision_matrix": decision_matrix.tolist(),
             "ranking": ranking,
