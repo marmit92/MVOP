@@ -11,6 +11,45 @@ from bson.objectid import ObjectId
 
 methods_bp = Blueprint('methods', __name__, url_prefix='/methods')
 
+@methods_bp.route('/comparison', methods=['GET', 'POST'])
+def comparison():
+    analysis_results = list(mongo.db.analysis_results.find())
+    
+    # Generate HTML tables for decision matrices
+    for analysis in analysis_results:
+        analysis['matrix_html'] = pd.DataFrame(
+            analysis['decision_matrix'],
+            columns=[c.strip() for c in analysis.get('criteria_chosen_to_analysis', [])],
+            index=analysis.get('companies_chosen', [])
+        ).to_html(classes='table table-striped table-hover border-primary table-sm')
+    
+    if request.method == 'POST':
+        first_index = int(request.form.get('first_analysis')) - 1
+        second_index = int(request.form.get('second_analysis')) - 1
+        
+        first_analysis = analysis_results[first_index]
+        second_analysis = analysis_results[second_index]
+        
+        # Check if criteria, weights, and companies match
+        if (first_analysis['criteria_chosen_to_analysis'] == second_analysis['criteria_chosen_to_analysis'] and
+            first_analysis['weights'] == second_analysis['weights'] and
+            first_analysis['companies_chosen'] == second_analysis['companies_chosen']):
+            
+            # Render the comparison if valid
+            return render_template(
+                'comparison.html', 
+                analysis_results=analysis_results, 
+                first_analysis=first_analysis, 
+                second_analysis=second_analysis
+            )
+        else:
+            # Redirect with error if not valid
+            flash("❌ Primerjava je dovoljena le med analizami z enakimi kriteriji, utežmi in alternativami.", "danger")
+            return redirect(url_for('methods.comparison'))
+    
+    # Initial rendering of the comparison page
+    return render_template('comparison.html', analysis_results=analysis_results)
+
 ##############################################################################
 # IZBIRA METODE
 ##############################################################################
