@@ -1,0 +1,112 @@
+{% extends "index.html" %}
+{% block content %}
+<div class="container mt-5">
+    <!-- Izbor kriterijev -->
+    <div class="card shadow mb-4">
+        <div class="card-header bg-warning text-white">
+            <h2 class="mb-0">3. Izbor kriterijev</h2>
+        </div>
+        <div class="card-body">
+            <!-- Izbrani kriteriji -->
+            <section class="mb-4">
+                <span class="text-warning display-4">Izbrani kriteriji</span>
+                <p>Za analizo podjetij sem uporabil naslednje kriterije, pridobljene iz podatkov Fortune 500:</p>
+                <ul>
+                    <li>
+                        <h5 class="text-warning">Prihodek ($):</h5>
+                        Meri skupni prihodek podjetja v določenem obdobju.
+                        Pomeni finančno stabilnost podjetja in njegovo sposobnost ustvarjanja prihodkov na trgu.
+                        Pomemben pokazatelj velikosti podjetja in njegovega položaja v panogi.
+
+                    </li>
+                    <li>
+                        <h5 class="text-warning">Dobiček ($):</h5>
+
+                        Prikazuje čisti dobiček podjetja po odbitju stroškov.
+                        Uporablja se za oceno finančne uspešnosti in sposobnosti ustvarjanja vrednosti za
+                        delničarje.
+
+                    </li>
+                    <li>
+                        <h5 class="text-warning">Finančna sredstva ($):</h5>
+
+                        Pomenijo likvidnost in sposobnost podjetja za financiranje operativnih in investicijskih
+                        potreb.
+                        Ključen kazalnik, ki omogoča oceno finančne stabilnosti podjetja.
+
+                    </li>
+                    <li>
+                        <h5 class="text-warning">Število zaposlenih:</h5>
+
+                        Predstavlja velikost delovne sile podjetja.
+                        Pomemben pokazatelj operativne zmogljivosti in vpliva podjetja na zaposlovanje v
+                        določenih regijah ali panogah.
+
+                    </li>
+                    <li>
+                        <h5 class="text-warning">Sprememba prihodkov (%):</h5>
+
+                        Meri odstotno rast ali zmanjšanje prihodkov v primerjavi s preteklimi obdobji.
+                        Ključen kriterij za oceno rasti podjetja in njegove prilagodljivosti na tržne spremembe.
+
+
+                    </li>
+                    <li>
+                        <h5 class="text-warning">Sprememba dobička (%):</h5>
+
+                        Meri odstotno rast ali zmanjšanje dobička v primerjavi s preteklimi obdobji.
+                        Pomeni sposobnost podjetja za povečanje dobičkonosnosti in učinkovito obvladovanje
+                        stroškov.
+
+                    </li>
+                </ul>
+            </section>
+            <hr>
+            <!-- Utemeljitev kriterijev -->
+            <section class="mb-4">
+                <span class="text-warning display-4">Utemeljitev kriterijev</span>
+                <p>Izbrani kriteriji pokrivajo ključna področja, ki so pomembna za oceno uspešnosti in konkurenčnosti
+                    podjetij:</p>
+                <ul>
+                    <li><strong>Finančna uspešnost:</strong> vključuje prihodke, dobiček in finančna sredstva, kar
+                        omogoča poglobljen vpogled v stabilnost in dobičkonosnost podjetja.</li>
+                    <li><strong>Operativni položaj:</strong> število zaposlenih prikazuje človeške vire in proizvodne
+                        zmogljivosti.</li>
+                    <li><strong>Rast in tržni uspeh:</strong> sprememba prihodkov in dobička odraža sposobnost podjetja
+                        za prilagajanje tržnim razmeram in povečanje dobičkonosnosti.</li>
+                </ul>
+            </section>
+            <hr>
+            <!-- Načrt zbiranja in obdelave podatkov -->
+            <section>
+                <h4 class="text-warning display-4">Načrt zbiranja in obdelave podatkov</h4>
+                <ul>
+                    <li>
+                        <strong>Vir podatkov:</strong> Podatki so bili pridobljeni iz javno dostopnih virov, kot so
+                        letna poročila podjetij, spletna mesta z analizami Fortune 500, ter spletni API-ji, kjer je to
+                        mogoče.
+                    </li>
+                    <li>
+                        <strong>Zbiranje podatkov:</strong>
+                        <ul>
+                            <li><strong>Prihodek, dobiček, finančna sredstva, število zaposlenih:</strong> pridobljeni
+                                iz Fortune 500 na podlagi njihove objavljene baze podatkov.</li>
+                            <li><strong>Sprememba prihodkov in dobička:</strong> izračunana na podlagi primerjave med
+                                trenutnim in preteklim poslovnim obdobjem.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Obdelava podatkov:</strong>
+                        <ul>
+                            <li>Standardizirana orodja, kot so Excel in Python, so bila uporabljena za čiščenje
+                                podatkov.</li>
+                            <li>Izvedena je bila normalizacija podatkov za zagotavljanje enakega vpliva vseh kriterijev
+                                v večkriterijski analizi.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "index.html" %}
+{% block content %}
+<div class="container mt-5">
+    <!-- Implementacija metod MCDA -->
+    <div class="card shadow mb-4">
+        <div class="card-header bg-secondary text-white">
+            <h2 class="mb-0">5. Implementacija metod MCDA</h2>
+        </div>
+        <div class="card-body">            
+            <section class="mb-4">
+                <h4 class="text-secondary">TOPSIS (Technique for Order of Preference by Similarity to Ideal Solution)</h4>
+                <p>
+                    TOPSIS temelji na identifikaciji rešitev, ki so najbližje idealni rešitvi in najdlje od najslabše možne rešitve. 
+                    Proces vključuje normalizacijo podatkov, izračun razdalj od pozitivnega in negativnega ideala ter določanje rangov.
+                    Ta metoda je posebej primerna za situacije, kjer je treba uravnotežiti prednosti in slabosti alternativ.
+                </p>
+            </section>
+            <hr>
+            <section class="mb-4">
+                <h4 class="text-secondary">PROMETHEE (Preference Ranking Organization Method for Enrichment Evaluations)</h4>
+                <p>
+                    PROMETHEE uporablja preferenčne funkcije za razvrščanje alternativ. 
+                    Z izračunom tokov preferenc (pozitivnih, negativnih in neto tokov) ponazarja relativno uspešnost alternativ. 
+                    Metoda je prilagodljiva, saj omogoča prilagajanje preferenčnih funkcij glede na potrebe uporabnikov.
+                </p>
+            </section>
+            <hr>
+            <section class="mb-4">
+                <h4 class="text-secondary">WSM (Weighted Sum Model)</h4>
+                <p>
+                    WSM uporablja tehtano vsoto ocen za oceno alternativ. 
+                    Uporabniki lahko z interaktivnimi orodji prilagajajo uteži in tako omogočajo dinamično analizo.
+                    Zaradi svoje preprostosti in preglednosti je metoda primerna za širok spekter uporab.
+                </p>
+            </section>
+            <hr>
+            <section class="mb-4">
+                <h4 class="text-secondary">MACBETH (Measuring Attractiveness by a Categorical Based Evaluation Technique)</h4>
+                <p>
+                    Macbeth omogoča kvalitativno in kvantitativno ocenjevanje alternativ z uporabo parnih primerjav. 
+                    Metoda uporabnikom omogoča, da izrazijo subjektivne preference, ki se nato pretvorijo v intervalne vrednosti. 
+                    To zmanjšuje napake pri ocenjevanju in zagotavlja natančno razvrstitev, kar je uporabno pri kompleksnih odločitvah.
+                </p>
+            </section>
+            <hr>
+            <section>
+                <h4 class="text-secondary">VIKOR (Multi-Criteria Optimization and Compromise Solution)</h4>
+                <p>
+                    VIKOR temelji na kompromisnem programiranju in identificira optimalno kompromisno rešitev.
+                    Metoda vključuje izračun distance od idealne rešitve ter kompromisnih uteži, ki določajo ravnotežje med kriteriji.
+                </p>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}

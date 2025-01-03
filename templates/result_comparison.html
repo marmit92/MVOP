@@ -1,0 +1,84 @@
+{% extends "index.html" %}
+{% block content %}
+<div class="container mt-5">
+    <!-- Primerjava in validacija rezultatov -->
+    <div class="card shadow mb-4">
+        <div class="card-header bg-danger text-white">
+            <h2 class="mb-0">6. Primerjava in validacija rezultatov</h2>
+        </div>
+        <div class="card-body">
+            <!-- Analiza in primerjava razvrstitev -->
+            <section class="mb-4">
+                <h4 class="text-danger">Analiza in primerjava razvrstitev</h4>
+                <p>Razvrščanje podjetij na podlagi različnih metod MCDA je ključno za razumevanje, kako se odločitve
+                    lahko
+                    spreminjajo glede na izbrane kriterije in metode. V tej aplikaciji so podjetja razvrščena z uporabo
+                    petih
+                    metod: TOPSIS, PROMETHEE, WSM, VIKOR in MACBETH. Vsaka metoda uporablja različne pristope za analizo
+                    podatkov
+                    in razvrščanje alternativ, kar lahko vodi do različnih rezultatov. Analiza teh rezultatov omogoča
+                    vpogled v
+                    kompleksne odnose med kriteriji in alternativami. Sistem omogoča uporabnikom, da vizualno primerjajo
+                    te
+                    rezultate z uporabo tabel, grafov in drugih vizualizacijskih orodij, kar pripomore k boljšemu
+                    razumevanju
+                    njihovega pomena.</p>
+                <hr class="my-3">
+                <p>Uporabniški vmesnik ponuja možnost preklapljanja med metodami, kar omogoča dinamičen vpogled v
+                    razlike med
+                    njimi. Na ta način lahko uporabniki raziskujejo, kako se razvrstitve podjetij spreminjajo glede na
+                    različne
+                    pristope in uteži kriterijev. Ta funkcionalnost zagotavlja uporabnikom orodja za poglobljeno analizo
+                    in
+                    sprejemanje bolj premišljenih odločitev.</p>
+            </section>
+            <hr>
+            <!-- Razlike v razvrstitvah -->
+            <section class="mb-4">
+                <h4 class="text-danger">Razlike v razvrstitvah</h4>
+                <p>Razlike v razvrstitvah so pogosto posledica specifičnih matematičnih modelov, ki jih uporablja vsaka
+                    metoda. Na primer, metoda TOPSIS se osredotoča na izbiro alternativ, ki so najbližje idealni rešitvi
+                    in
+                    najdlje od najslabše možne rešitve. PROMETHEE uporablja preferenčne funkcije za določanje relativnih
+                    prednosti med alternativami, kar lahko privede do drugačnih rezultatov. Metoda VIKOR daje prednost
+                    kompromisnim rešitvam, ki upoštevajo različne kriterije, medtem ko MACBETH poudarja subjektivne
+                    presojne
+                    lestvice in preferenčne intervale. Te razlike v pristopih so pomembne za razumevanje, zakaj so
+                    razvrstitve
+                    včasih lahko precej različne.</p>
+                <hr class="my-3">
+
+                <p>Poleg tega lahko na rezultate močno vplivajo tudi uteži, ki jih uporabniki dodelijo posameznim
+                    kriterijem,
+                    ter način normalizacije podatkov. Na primer, če je določen kriterij, kot je rast prihodkov, močno
+                    poudarjen, bodo podjetja z visoko rastjo imela prednost, medtem ko bodo druga podjetja morda slabše
+                    razvrščena. Uporabniki lahko skozi te razlike pridobijo boljšo perspektivo o ključnih dejavnikih, ki
+                    vplivajo na razvrstitve.</p>
+            </section>
+            <hr>
+            <!-- Uporabniška izkušnja in informiranost -->
+            <section>
+                <h4 class="text-danger">Uporabniška izkušnja in informiranost</h4>
+                <p>Ena izmed ključnih prednosti sistema je njegova sposobnost, da uporabnikom pomaga razumeti in
+                    interpretirati
+                    razlike med različnimi metodami MCDA. Vizualizacije, kot so grafi in diagrami, igrajo ključno vlogo
+                    pri
+                    predstavitvi rezultatov na jasen in pregleden način. Interaktivnost sistema omogoča uporabnikom, da
+                    v
+                    realnem času prilagajajo parametre, kot so uteži kriterijev, in takoj opazijo, kako te spremembe
+                    vplivajo na
+                    končne rezultate.</p>
+                <hr class="my-3">
+
+                <p>Sistem je zasnovan tako, da ne samo prikazuje razvrstitve, temveč tudi spodbuja uporabnike k analizi
+                    kompromisov med različnimi alternativami. To omogoča uporabnikom, da se osredotočijo na tiste
+                    kriterije, ki
+                    so zanje najpomembnejši, in tako sprejemajo bolj informirane in premišljene odločitve. S tem
+                    pristopom
+                    sistem zagotavlja edinstveno podporo pri sprejemanju odločitev, ki temelji na podatkih in globokem
+                    razumevanju različnih metod MCDA.</p>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}

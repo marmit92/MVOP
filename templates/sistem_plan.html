@@ -1,0 +1,46 @@
+{% extends "index.html" %}
+{% block content %}
+<div class="container mt-5">
+    <!-- Načrtovanje in arhitektura sistema -->
+    <div class="card shadow mb-4">
+        <div class="card-header bg-info text-white">
+            <h2 class="mb-0">4. Načrtovanje in arhitektura sistema</h2>
+        </div>
+        <div class="card-body">
+            <!-- Sistemske zahteve -->
+            <section class="mb-4">
+                <h4 class="text-info">Sistemske zahteve</h4>
+                <p>Sistem za podporo pri večkriterijskem odločanju je zasnovan tako, da vključuje vse ključne
+                    funkcionalne in nefunkcionalne zahteve. Funkcionalno aplikacija uporabnikom omogoča izbiro
+                    podjetij s seznama Fortune 500, določanje kriterijev, določanje uteži kriterijev, uporabo različnih
+                    metod MCDA in pregled
+                    rezultatov v obliki tabel, grafov ter razvrstitev. Nefunkcionalno je sistem učinkovit,
+                    uporabniku prijazen in prilagodljiv, omogoča hitro analizo in intuitivno uporabniško izkušnjo.
+                </p>
+            </section>
+            <hr>
+            <!-- Arhitektura sistema -->
+            <section class="mb-4">
+                <h4 class="text-info">Arhitektura sistema</h4>
+                <p>Arhitektura sistema temelji na treh glavnih komponentah: uporabniški del, stežniški del in obdelava
+                    podatkov. Uporabniški del je zgrajen s pomočjo tehnologij HTML, CSS, JavaScript in Jinja2. Bootstrap se
+                    uporablja za oblikovanje in odzivnost strani, Chart.js pa za vizualizacijo podatkov. Stežniški del,
+                    implementiran z uporabo ogrodja Flask v Pythonu, poskrbi za upravljanje podatkov, izvajanje analiz
+                    in interakcijo z bazo podatkov.</p>
+                <p>Obdelava podatkov vključuje čiščenje, normalizacijo in pripravo podatkov za analizo z uporabo Python
+                    knjižnic, kot je pyDecision. Ta modularna zasnova omogoča enostavno integracijo novih metod in
+                    prilagajanje potrebam uporabnikov.</p>
+            </section>
+            <hr>
+            <!-- Načrt baze podatkov -->
+            <section class="mb-4">
+                <h4 class="text-info">Načrt baze podatkov</h4>
+                <p>Podatki so shranjeni v MongoDB, kar omogoča hitro obdelavo in fleksibilno strukturiranje. Vsaka
+                    analiza je shranjena kot zapis, ki vključuje identifikator analize, izbrana podjetja, kriterije,
+                    uteži, rezultate in metapodatke o metodi ter času izvedbe. NoSQL baza je bila izbrana zaradi svoje
+                    enostavne integracije s Flask ter prilagodljivosti glede na različne podatkovne strukture.</p>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}

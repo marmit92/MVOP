@@ -1,9 +1,116 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="jumbotron">
-  <h1 class="display-4">Dobrodošli v MCDA Demo</h1>
-  <p class="lead">To je demonstracijska aplikacija za večkriterijsko odločanje (MCDA) z uporabo Flask, PyMongo in pyDecision.</p>
-  <hr class="my-4">
-  <p>Uporabite navigacijo zgoraj, da pregledate podjetja, kriterije, uteži in metode.</p>
+  <h1 class="display-6">Sistem za podporo odločanja</h1>
+  <p>To je spletna aplikacija za večkriterijsko odločanje (MCDA) z uporabo Flask, MongoDB, Jinja2, Bootstrap5, PyMongo
+    in
+    pyDecision. Uporabite navigacijo zgoraj, da pregledate podjetja, kriterije, uteži in metode.</p>
+  <hr class="my-1">
+  <!--   <p></p>
+ -->
+</div>
+<div class="container">
+  <div class="row g-3">
+    <!-- Card 1 -->
+    <div class="col-md-3">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">1. Uvod</h5>
+          <p class="card-text">{{ long_text|truncate(149, True, '...') }}</p>
+          <a href="/intro" class="btn text-light btn-primary">Preberite več...</a>
+        </div>
+      </div>
+    </div>
+    <!-- Card 2 -->
+    <div class="col-md-3">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">2. Izbor podjetij</h5>
+          <p class="card-text">{{ company_choice|truncate(150, True, '...') }}</p>
+          <a href="/companies_choice" class="btn text-light btn-success">Preberite več...</a>
+        </div>
+      </div>
+    </div>
+    <!-- Card 3 -->
+    <div class="col-md-3">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">3. Izbor kriterijev</h5>
+          <p class="card-text">{{ criteria_choice|truncate(150, True, '...') }}</p>
+          <a href="/criteria_choice" class="btn text-light btn-primary">Preberite več...</a>
+        </div>
+      </div>
+    </div>
+    <!-- Card 4 -->
+    <div class="col-md-3">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">4. Načrtovanje in arhitektura sistema</h5>
+          <p class="card-text">{{ sistem_plan|truncate(130, True, '...') }}</p>
+          <a href="/sistem_plan" class="btn text-light btn-success">Preberite več...</a>
+        </div>
+      </div>
+    </div>
+    <!-- Card 5 -->
+    <div class="col-md-6">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">5. Implementacija metod MCDA</h5>
+          <p class="card-text">{{ method_implement|truncate(190, True, '...') }}</p>
+          <a href="/method_implement" class="btn text-light btn-danger">Preberite več...</a>
+        </div>
+      </div>
+    </div>
+    <!-- Card 6 -->
+    <div class="col-md-6">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">6. Primerjava in validacija rezultatov</h5>
+          <p class="card-text">{{ result_comparison|truncate(180, True, '...') }}</p>
+          <a href="/result_comparison" class="btn text-light btn-danger">Preberite več...</a>
+        </div>
+      </div>
+    </div>
+    <!-- Card 7 -->
+    <div class="col-md-3">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">7. Odločanje kot uporabnik sistema</h5>
+          <p class="card-text">{{ user_decision|truncate(150, True, '...') }}</p>
+          <a href="/user_decision" class="btn text-light btn-primary">Preberite več...</a>
+        </div>
+      </div>
+    </div>
+    <!-- Card 8 -->
+    <div class="col-md-3">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">8. Testiranje in ocenjevanje zmogljivosti</h5>
+          <p class="card-text">{{ testing|truncate(150, True, '...') }}</p>
+          <a href="/testing" class="btn text-light btn-success">Preberite več...</a>
+        </div>
+      </div>
+    </div>
+    <!-- Card 9 -->
+    <div class="col-md-3">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">9. Zaključek</h5>
+          <p class="card-text">{{ conclusion|truncate(160, True, '...') }}</p>
+          <a href="/conclusion" class="btn text-light btn-primary">Preberite več...</a>
+        </div>
+      </div>
+    </div>
+    <!-- Card 10 -->
+    <div class="col-md-3">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">10. Doseženi cilj s seminarsko nalogo</h5>
+          <p class="card-text">{{ expected_results|truncate(150, True, '...') }}</p>
+          <a href="/expected_results" class="btn text-light btn-success">Preberite več...</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

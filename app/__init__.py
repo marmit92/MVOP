@@ -26,6 +26,7 @@ def create_app():
     from .routes.weights import weights_bp
     from .routes.methods import methods_bp
     from .routes.results import results_bp
+    from .routes.intro import intro_bp
 
     app.register_blueprint(main_bp)
     app.register_blueprint(analysis_bp)
@@ -34,5 +35,6 @@ def create_app():
     app.register_blueprint(weights_bp)
     app.register_blueprint(methods_bp)
     app.register_blueprint(results_bp)
+    app.register_blueprint(intro_bp)
 
     return app

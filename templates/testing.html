@@ -1,0 +1,43 @@
+{% extends "index.html" %}
+{% block content %}
+<div class="container mt-5">
+    <!-- Testiranje in ocenjevanje zmogljivosti -->
+    <div class="card shadow mb-4">
+        <div class="card-header bg-success text-white">
+            <h2 class="mb-0">8. Testiranje in ocenjevanje zmogljivosti</h2>
+        </div>
+        <div class="card-body">
+            <!-- Testiranje sistema -->
+            <section class="mb-4">
+                <h4 class="text-success">Testiranje sistema</h4>
+                <p>Za preverjanje pravilnega delovanja sistema smo uporabili več strategij testiranja. Na začetku smo
+                    izvedli <strong>enotno testiranje</strong>, kjer smo posamično preverili vsako funkcijo sistema, kot
+                    so normalizacija podatkov, izračun rezultatov z uporabo različnih metod MCDA ter prikaz rezultatov.
+                    Nato smo nadaljevali z <strong>integracijskim testiranjem</strong>, kjer smo zagotovili pravilno
+                    povezavo med posameznimi komponentami, kot so uporabniški vmesnik, zaledni sistem in podatkovna
+                    baza.
+                    <hr class="my-3">
+                <p>Med implementacijo sem naletel na več izzivov, med katerimi je bila ena ključnih usklajenost
+                    rezultatov med različnimi metodami MCDA. Rešitev je vključevala natančno preverjanje algoritmov in
+                    dodatne vizualizacije, ki so pomagale pojasniti razlike v rezultatih.</p>
+            </section>
+            <hr>
+            <!-- Ocenjevanje zmogljivosti -->
+            <section class="mb-4">
+                <h4 class="text-success">Ocenjevanje zmogljivosti</h4>
+                <p>Sistem sem preizkusil z različnimi velikostmi vhodnih podatkov, da bi ocenil njegovo
+                    <strong>odzivnost in prilagodljivost</strong>. Testi so vključevali obdelavo majhnih in velikih
+                    nizov podatkov za simulacijo različnih scenarijev. Rezultati so pokazali, da je sistem sposoben
+                    učinkovito obdelati podatke, pri čemer so časi obdelave ostali znotraj pričakovanih mej.
+                </p>
+                <hr class="my-3">
+                <p>Optimizacija kode je igrala pomembno vlogo pri izboljšanju zmogljivosti. Vključitev knjižnic, kot sta
+                    <strong>NumPy</strong> in <strong>Pandas</strong>, je omogočila hitrejšo obdelavo podatkov, hkrati
+                    pa sem zmanjšal uporabo nepotrebnih zank in ponovitev v algoritmih. Sistem je tako pripravljen na
+                    obdelavo večjih podatkovnih nizov brez opaznega zmanjšanja učinkovitosti.
+                </p>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}
